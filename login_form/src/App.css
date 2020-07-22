@@ -1,0 +1,13 @@
+.maindiv {
+  background-color: darkblue;
+  padding: 2rem;
+  min-height: 594px !important;
+}
+
+form {
+  margin: 0 auto;
+  max-width: 500px;
+  padding: 2rem;
+  margin-top: 4rem;
+  background-color: white !important;
+}
