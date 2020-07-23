@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Table,
   Button,
@@ -11,29 +11,54 @@ import {
   Row,
   Form,
   Container,
+  Col,
+  FormGroup,
 } from "reactstrap";
-import { ToastContainer, toast } from "react-toastify";
+import * as yup from "yup";
+import moment from "moment";
 import "react-toastify/dist/ReactToastify.css";
-
+import { useDispatch, useSelector } from "react-redux";
+import { yupResolver } from "@hookform/resolvers";
 import { useForm, Controller } from "react-hook-form";
+import { AddPaste, FetchPaste } from "../Redux/actions/login";
+import { useHistory } from "react-router-dom";
+
+const FormSchema = yup.object().shape({
+  content: yup.string().required("*Text is Required"),
+  Expiration: yup.string().required("*Please select any value"),
+  Exposure: yup.string().required("*Please select any value"),
+  title: yup.string().required("*Text is Required"),
+});
 
 const Dashboard = () => {
   const [modal, setModal] = useState(false);
 
   const toggle = () => setModal(!modal);
 
-  // const notify = () => {
-  //   toast("sucessfully added !");
-  // };
+  const dispatch = useDispatch();
 
-  const { control, register, handleSubmit, errors, reset } = useForm();
+  const { loading, paste } = useSelector((state) => ({
+    loading: state.LoginReducer.fetchpaste.loading,
+    paste: state.LoginReducer.fetchpaste.paste,
+  }));
 
+  const { control, register, handleSubmit, errors, reset } = useForm({
+    resolver: yupResolver(FormSchema),
+  });
   const onSubmit = (data) => {
-    console.log(data);
+    // console.log(allpastes);
+    dispatch(
+      AddPaste(data.content, data.Expiration, data.Exposure, data.title)
+    );
+    toggle();
   };
 
+  useEffect(() => {
+    dispatch(FetchPaste());
+  }, [dispatch]);
+
   return (
-    <Container className="p-5">
+    <Container fluid={true}>
       <Row className="p-3">
         <Button color="primary" onClick={toggle}>
           Add Paste
@@ -49,78 +74,133 @@ const Dashboard = () => {
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>Mark</td>
-            <td>Otto</td>
-            <td>@mdo</td>
-          </tr>
+          {paste !== null &&
+            paste.map((paste) => (
+              <tr key={paste.id}>
+                <td>{paste.title}</td>
+                <td>{moment(paste.created_at).format("MMM Do, YY")}</td>
+                <td>{paste.Expiration}</td>
+              </tr>
+            ))}
         </tbody>
       </Table>
 
       <>
         <Modal isOpen={modal} toggle={toggle}>
+          <ModalHeader>
+            <Row>
+              <Col md={12}>
+                <Label>Create New Paste</Label>
+              </Col>
+            </Row>
+          </ModalHeader>
           <ModalBody>
             <Form onSubmit={handleSubmit(onSubmit)} className="p-1">
-              <Label>New Paste</Label>
-              <Controller
-                as={Input}
-                type="textarea"
-                name="newpaste"
-                control={control}
-                ref={register}
-              />
-              <Label>Optional Paste Settings</Label>
-              <br></br>
-              <Label>Paste Expiration</Label>
-              <Controller
-                as={Input}
-                type="select"
-                name="expiration"
-                control={control}
-                ref={register}
-              >
-                <option>Never</option>
-                <option>10 minutes</option>
-                <option>1 Hour</option>
-                <option>1 Day</option>
-                <option>1 Week</option>
-                <option>2 Weeks</option>
-                <option>1 Month</option>
-                <option>6 Months</option>
-                <option>1 Year</option>
-                />
-              </Controller>
-              <Label>Paste Exposure</Label>
-              <Controller
-                as={Input}
-                type="select"
-                name="exposure"
-                control={control}
-                ref={register}
-              >
-                <option>Public</option>
-                <option>Private</option>
-                />
-              </Controller>
-              <Label> Paste Name/Title</Label>
-              <Controller
-                as={Input}
-                type="text"
-                name="title"
-                control={control}
-                ref={register}
-              />
+              <Row>
+                <Col md={12}>
+                  <Label>New Paste</Label>
+                </Col>
+              </Row>
+              <Row>
+                <Col md={12}>
+                  <FormGroup>
+                    <Controller
+                      as={Input}
+                      type="textarea"
+                      name="content"
+                      defaultValue=""
+                      control={control}
+                      ref={register}
+                    />
+                    {errors && errors.content && (
+                      <span className="text-danger">
+                        {errors.content.message}
+                      </span>
+                    )}
+                  </FormGroup>
+                </Col>
+              </Row>
+
+              <Row>
+                <Col md={4}>
+                  <Label>Paste Expiration</Label>
+                </Col>
+                <Col md={8}>
+                  <FormGroup>
+                    <Controller
+                      as={Input}
+                      type="select"
+                      name="Expiration"
+                      defaultValue=""
+                      control={control}
+                      ref={register}
+                    >
+                      <option>Select</option>
+                      <option>aminute</option>
+                      <option>ahours</option>
+                    </Controller>
+                    {errors && errors.Expiration && (
+                      <span className="text-danger">
+                        {errors.Expiration.message}
+                      </span>
+                    )}
+                  </FormGroup>
+                </Col>
+              </Row>
+
+              <Row>
+                <Col md={4}>
+                  <Label>Paste Exposure</Label>
+                </Col>
+                <Col md={8}>
+                  <FormGroup>
+                    <Controller
+                      as={Input}
+                      type="select"
+                      name="Exposure"
+                      defaultValue=""
+                      control={control}
+                      ref={register}
+                    >
+                      <option>Select</option>
+                      <option>public</option>
+                      <option>private</option>
+                      <option>unlisted</option>
+                    </Controller>
+                    {errors && errors.Exposure && (
+                      <span className="text-danger">
+                        {errors.Exposure.message}
+                      </span>
+                    )}
+                  </FormGroup>
+                </Col>
+              </Row>
+
+              <Row>
+                <Col md={4}>
+                  <Label> Paste Name/Title</Label>
+                </Col>
+                <Col md={8}>
+                  <FormGroup>
+                    <Controller
+                      as={Input}
+                      type="text"
+                      name="title"
+                      defaultValue=""
+                      control={control}
+                      ref={register}
+                    />
+                    {errors && errors.title && (
+                      <span className="text-danger">
+                        {errors.title.message}
+                      </span>
+                    )}
+                  </FormGroup>
+                </Col>
+              </Row>
+
               <ModalFooter>
-                <Button
-                  color="primary"
-                  onClick={() => {
-                    // notify();
-                    // toggle();
-                  }}
-                >
-                  Create New Paste
-                </Button>
-                <ToastContainer position={"top-center"} />
+                <Button color="primary">Save</Button>
               </ModalFooter>
             </Form>
           </ModalBody>

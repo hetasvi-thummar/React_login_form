@@ -1,5 +1,5 @@
 import React from "react";
-
+import { ToastContainer, toast } from "react-toastify";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Formlogin from "./Views/Formlogin";
 import Dashboard from "./Views/Dashboard";
@@ -15,6 +15,7 @@ const App = () => {
           <Route path="/dashboard" component={Dashboard} />
         </Switch>
       </Router>
+      <ToastContainer />
     </Provider>
   );
 };

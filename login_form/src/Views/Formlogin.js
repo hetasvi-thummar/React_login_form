@@ -23,22 +23,15 @@ const Formlogin = () => {
   const dispatch = useDispatch();
   const history = useHistory();
 
-  const notify = () => {
-    toast.success("sucessfully login !", {
-      position: "top-center",
-      autoClose: 7000,
-    });
-  };
-
   const onsubmit = (data) => {
     dispatch(LoginData(data.identifier, data.password, history));
-    notify();
+    reset({ identifier: "", password: "" });
   };
 
   return (
     <div className="maindiv">
       <Container>
-        <Form onSubmit={handleSubmit(onsubmit)}>
+        <Form onSubmit={handleSubmit(onsubmit)} className="loginbox">
           <div className="text-center pb-5">
             <h2>Welcome !!!!!</h2>
           </div>
@@ -74,7 +67,6 @@ const Formlogin = () => {
           </FormGroup>
           <FormGroup className="text-center">
             <Button color="primary">Sign In</Button>
-            <ToastContainer />
           </FormGroup>
         </Form>
       </Container>
