@@ -21,7 +21,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { yupResolver } from "@hookform/resolvers";
 import { useForm, Controller } from "react-hook-form";
 import { AddPaste, FetchPaste } from "../Redux/actions/login";
-import { useHistory } from "react-router-dom";
 
 const FormSchema = yup.object().shape({
   content: yup.string().required("*Text is Required"),
@@ -75,7 +74,7 @@ const Dashboard = () => {
         </thead>
         <tbody>
           {paste !== null &&
-            paste.map((paste) => (
+            paste.reverse().map((paste) => (
               <tr key={paste.id}>
                 <td>{paste.title}</td>
                 <td>{moment(paste.created_at).format("MMM Do, YY")}</td>

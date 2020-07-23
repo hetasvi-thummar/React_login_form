@@ -56,12 +56,13 @@ export const AddPaste = (content, Expiration, Exposure, title) => {
       )
 
       .then((res) => {
-        dispatch({
-          type: "ADDPASTE_SUCCESS",
-        });
         toast.success("successfully Added", {
           position: toast.POSITION.TOP_CENTER,
         });
+        dispatch({
+          type: "ADDPASTE_SUCCESS",
+        });
+        window.location.reload();
       })
 
       .catch((error) => {
@@ -89,6 +90,7 @@ export const FetchPaste = () => {
           type: "FETCHPASTE_SUCCESS",
           paste: res.data,
         });
+
         // console.log(`paste:${JSON.stringify(res.data)}`);
       })
       .catch((error) => {
