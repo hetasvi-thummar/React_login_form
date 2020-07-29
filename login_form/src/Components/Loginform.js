@@ -6,17 +6,16 @@ import { useForm, Controller } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers";
 import { useHistory } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
 import { LoginData } from "../Redux/actions/login";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { useDispatch, useSelector } from "react-redux";
+import Header from "./Header";
 
 const FormSchema = yup.object().shape({
   identifier: yup.string().required("*username is Required"),
   password: yup.string().required("*Password is Required"),
 });
 
-const Formlogin = () => {
+const Loginform = () => {
   const { control, register, handleSubmit, errors, reset } = useForm({
     resolver: yupResolver(FormSchema),
   });
@@ -46,8 +45,8 @@ const Formlogin = () => {
               ref={register}
               className="text-center"
             />
-            {errors && errors.username && (
-              <span className="text-danger">{errors.username.message}</span>
+            {errors && errors.identifier && (
+              <span className="text-danger">{errors.identifier.message}</span>
             )}
           </FormGroup>
           <FormGroup>
@@ -73,4 +72,4 @@ const Formlogin = () => {
     </div>
   );
 };
-export default Formlogin;
+export default Loginform;

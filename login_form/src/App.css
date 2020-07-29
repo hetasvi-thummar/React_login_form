@@ -5,13 +5,33 @@
 }
 
 form {
-  margin: 0 auto;
+  /* margin: 0 auto; */
   max-width: 500px;
-  padding: 2rem;
+  /* padding: 2rem; */
   /* margin-top: 4rem; */
   background-color: white !important;
 }
 
 .loginbox {
   margin-top: 5rem;
+  padding: 2rem;
+  margin: 0 auto;
+  margin-top: 5rem;
+}
+label {
+  padding: 0.5rem;
+  font-size: 15px;
+}
+
+.dashboard-div {
+  background-color: white;
+}
+
+table {
+  background-color: white;
+}
+
+.logo {
+  height: 3rem;
+  width: 6rem;
 }

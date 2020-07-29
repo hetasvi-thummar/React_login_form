@@ -15,6 +15,7 @@ export const LoginData = (identifier, password, history) => {
           position: toast.POSITION.TOP_CENTER,
         });
         localStorage.setItem("jwt", res.data.jwt);
+        localStorage.setItem("username", res.data.user.username);
         dispatch({
           type: "LOGINDATA_SUCCESS",
           identifier: res.data.identifier,
@@ -34,7 +35,7 @@ export const LoginData = (identifier, password, history) => {
   };
 };
 
-export const AddPaste = (content, Expiration, Exposure, title) => {
+export const AddPaste = (content, Expiration, Exposure, title, toggle) => {
   let jwt = localStorage.getItem("jwt");
 
   return (dispatch) => {
@@ -63,9 +64,13 @@ export const AddPaste = (content, Expiration, Exposure, title) => {
           type: "ADDPASTE_SUCCESS",
         });
         window.location.reload();
+        toggle();
       })
 
       .catch((error) => {
+        toast.error("Failed", {
+          position: toast.POSITION.TOP_CENTER,
+        });
         dispatch({
           type: "ADDPASTE_FAILURE",
         });

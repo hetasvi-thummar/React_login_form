@@ -12,7 +12,9 @@ import {
   Form,
   Container,
   Col,
+  Img,
   FormGroup,
+  Media,
 } from "reactstrap";
 import * as yup from "yup";
 import moment from "moment";
@@ -21,6 +23,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { yupResolver } from "@hookform/resolvers";
 import { useForm, Controller } from "react-hook-form";
 import { AddPaste, FetchPaste } from "../Redux/actions/login";
+import { ToastContainer } from "react-toastify";
+import Header from "./Header";
 
 const FormSchema = yup.object().shape({
   content: yup.string().required("*Text is Required"),
@@ -49,7 +53,6 @@ const Dashboard = () => {
     dispatch(
       AddPaste(data.content, data.Expiration, data.Exposure, data.title)
     );
-    toggle();
   };
 
   useEffect(() => {
@@ -57,44 +60,47 @@ const Dashboard = () => {
   }, [dispatch]);
 
   return (
-    <Container fluid={true}>
-      <Row className="p-3">
-        <Button color="primary" onClick={toggle}>
-          Add Paste
-        </Button>
-      </Row>
+    <div className="dashboard-div">
+      <Header></Header>
+      <Container>
+        <Row className="p-3">
+          <Button color="primary" onClick={toggle}>
+            Add Paste
+          </Button>
+          {/* <Img alt="img" /> */}
+          {/* <Media
+          // src="https://unsplash.it/64/64"
+          src="../images/logo.png"
+          alt="Generic placeholder image"
+        /> */}
+        </Row>
+        <Table>
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Added</th>
+              <th>Expiry Time</th>
+            </tr>
+          </thead>
+          <tbody>
+            {paste !== null &&
+              paste
+                .slice()
+                .reverse()
+                .map((paste) => (
+                  <tr key={paste.id}>
+                    <td>{paste.title}</td>
+                    <td>{moment(paste.created_at).format("MMM Do, YY")}</td>
+                    <td>{paste.Expiration}</td>
+                  </tr>
+                ))}
+          </tbody>
+        </Table>
 
-      <Table>
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Added</th>
-            <th>Expiry Time</th>
-          </tr>
-        </thead>
-        <tbody>
-          {paste !== null &&
-            paste.reverse().map((paste) => (
-              <tr key={paste.id}>
-                <td>{paste.title}</td>
-                <td>{moment(paste.created_at).format("MMM Do, YY")}</td>
-                <td>{paste.Expiration}</td>
-              </tr>
-            ))}
-        </tbody>
-      </Table>
-
-      <>
         <Modal isOpen={modal} toggle={toggle}>
-          <ModalHeader>
-            <Row>
-              <Col md={12}>
-                <Label>Create New Paste</Label>
-              </Col>
-            </Row>
-          </ModalHeader>
-          <ModalBody>
-            <Form onSubmit={handleSubmit(onSubmit)} className="p-1">
+          <Form onSubmit={handleSubmit(onSubmit)}>
+            <ModalHeader toggle={toggle}>Create New Paste</ModalHeader>
+            <ModalBody>
               <Row>
                 <Col md={12}>
                   <Label>New Paste</Label>
@@ -185,6 +191,7 @@ const Dashboard = () => {
                       as={Input}
                       type="text"
                       name="title"
+                      placeholder="Enter Paste Title"
                       defaultValue=""
                       control={control}
                       ref={register}
@@ -197,15 +204,14 @@ const Dashboard = () => {
                   </FormGroup>
                 </Col>
               </Row>
-
-              <ModalFooter>
-                <Button color="primary">Save</Button>
-              </ModalFooter>
-            </Form>
-          </ModalBody>
+            </ModalBody>
+            <ModalFooter>
+              <Button color="secondary">Save</Button>
+            </ModalFooter>
+          </Form>
         </Modal>
-      </>
-    </Container>
+      </Container>
+    </div>
   );
 };
 

@@ -1,21 +1,21 @@
 import React from "react";
-import { ToastContainer, toast } from "react-toastify";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import Formlogin from "./Views/Formlogin";
-import Dashboard from "./Views/Dashboard";
+import { ToastContainer } from "react-toastify";
+import { BrowserRouter as Router, Switch } from "react-router-dom";
 import { Provider } from "react-redux";
 import { store } from "./Redux/store";
+
+import { Loginform, Dashboard, Myrouter } from "./Components";
 
 const App = () => {
   return (
     <Provider store={store}>
       <Router>
         <Switch>
-          <Route path="/" component={Formlogin} exact={true} />
-          <Route path="/dashboard" component={Dashboard} />
+          <Myrouter path="/" component={Loginform} exact={true} />
+          <Myrouter path="/dashboard" component={Dashboard} />
         </Switch>
       </Router>
-      <ToastContainer />
+      <ToastContainer hideProgressBar={true} />
     </Provider>
   );
 };
