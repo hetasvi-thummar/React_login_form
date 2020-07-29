@@ -1,14 +1,14 @@
-import React, { useEffect } from "react";
+import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Container, Form, FormGroup, Input, Button } from "reactstrap";
 import "../App.css";
 import { useForm, Controller } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers";
-import { useHistory } from "react-router-dom";
+import { useHistory, Redirect } from "react-router-dom";
 import { LoginData } from "../Redux/actions/login";
-import { useDispatch, useSelector } from "react-redux";
-import Header from "./Header";
+import { useDispatch } from "react-redux";
+import logo from "./Images/formlogo.png";
 
 const FormSchema = yup.object().shape({
   identifier: yup.string().required("*username is Required"),
@@ -26,14 +26,18 @@ const Loginform = () => {
     dispatch(LoginData(data.identifier, data.password, history));
     reset({ identifier: "", password: "" });
   };
+  const token = localStorage.getItem("jwt");
 
-  return (
+  return token ? (
+    <Redirect to="/dashboard" />
+  ) : (
     <div className="maindiv">
       <Container>
         <Form onSubmit={handleSubmit(onsubmit)} className="loginbox">
-          <div className="text-center pb-5">
-            <h2>Welcome !!!!!</h2>
-          </div>
+          <FormGroup className="text-center">
+            <img src={logo} alt="logo" className="logo1" />
+          </FormGroup>
+
           <FormGroup>
             <Controller
               as={Input}

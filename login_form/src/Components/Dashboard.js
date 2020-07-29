@@ -12,9 +12,7 @@ import {
   Form,
   Container,
   Col,
-  Img,
   FormGroup,
-  Media,
 } from "reactstrap";
 import * as yup from "yup";
 import moment from "moment";
@@ -23,8 +21,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { yupResolver } from "@hookform/resolvers";
 import { useForm, Controller } from "react-hook-form";
 import { AddPaste, FetchPaste } from "../Redux/actions/login";
-import { ToastContainer } from "react-toastify";
 import Header from "./Header";
+import { ToastContainer } from "react-toastify";
 
 const FormSchema = yup.object().shape({
   content: yup.string().required("*Text is Required"),
@@ -40,19 +38,19 @@ const Dashboard = () => {
 
   const dispatch = useDispatch();
 
-  const { loading, paste } = useSelector((state) => ({
+  const { paste } = useSelector((state) => ({
     loading: state.LoginReducer.fetchpaste.loading,
     paste: state.LoginReducer.fetchpaste.paste,
   }));
 
-  const { control, register, handleSubmit, errors, reset } = useForm({
+  const { control, register, handleSubmit, errors } = useForm({
     resolver: yupResolver(FormSchema),
   });
   const onSubmit = (data) => {
-    // console.log(allpastes);
     dispatch(
       AddPaste(data.content, data.Expiration, data.Exposure, data.title)
     );
+    toggle();
   };
 
   useEffect(() => {
@@ -61,18 +59,13 @@ const Dashboard = () => {
 
   return (
     <div className="dashboard-div">
+      <ToastContainer />
       <Header></Header>
-      <Container>
-        <Row className="p-3">
+      <Container className="pt-5">
+        <Row className="p-3 ">
           <Button color="primary" onClick={toggle}>
             Add Paste
           </Button>
-          {/* <Img alt="img" /> */}
-          {/* <Media
-          // src="https://unsplash.it/64/64"
-          src="../images/logo.png"
-          alt="Generic placeholder image"
-        /> */}
         </Row>
         <Table>
           <thead>

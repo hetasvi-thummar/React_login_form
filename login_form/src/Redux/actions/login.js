@@ -16,6 +16,7 @@ export const LoginData = (identifier, password, history) => {
         });
         localStorage.setItem("jwt", res.data.jwt);
         localStorage.setItem("username", res.data.user.username);
+
         dispatch({
           type: "LOGINDATA_SUCCESS",
           identifier: res.data.identifier,
@@ -63,8 +64,8 @@ export const AddPaste = (content, Expiration, Exposure, title, toggle) => {
         dispatch({
           type: "ADDPASTE_SUCCESS",
         });
-        window.location.reload();
-        toggle();
+        //window.location.reload();
+        // toggle();
       })
 
       .catch((error) => {
