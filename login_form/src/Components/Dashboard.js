@@ -22,7 +22,7 @@ import { yupResolver } from "@hookform/resolvers";
 import { useForm, Controller } from "react-hook-form";
 import { AddPaste, FetchPaste } from "../Redux/actions/login";
 import Header from "./Header";
-import { ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 
 const FormSchema = yup.object().shape({
   content: yup.string().required("*Text is Required"),
@@ -59,7 +59,6 @@ const Dashboard = () => {
 
   return (
     <div className="dashboard-div">
-      <ToastContainer />
       <Header></Header>
       <Container className="pt-5">
         <Row className="p-3 ">

@@ -36,7 +36,7 @@ export const LoginData = (identifier, password, history) => {
   };
 };
 
-export const AddPaste = (content, Expiration, Exposure, title, toggle) => {
+export const AddPaste = (content, Expiration, Exposure, title) => {
   let jwt = localStorage.getItem("jwt");
 
   return (dispatch) => {
@@ -58,13 +58,16 @@ export const AddPaste = (content, Expiration, Exposure, title, toggle) => {
       )
 
       .then((res) => {
-        toast.success("successfully Added", {
-          position: toast.POSITION.TOP_CENTER,
-        });
         dispatch({
           type: "ADDPASTE_SUCCESS",
         });
-        //window.location.reload();
+
+        window.location.reload();
+        toast.success("successfully Added", {
+          position: toast.POSITION.TOP_CENTER,
+          autoClose: 10000,
+        });
+
         // toggle();
       })
 

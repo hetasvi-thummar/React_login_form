@@ -35,12 +35,17 @@ const LoginReducer = (state = initialState, action) => {
     case "ADDPASTE_SUCCESS":
       return {
         ...state,
-        addpaste: { loading: false, data: action.data },
+        addpaste: {
+          loading: false,
+          data: action.data,
+          error: "",
+          message: action.message,
+        },
       };
     case "ADDPASTE_FAILURE":
       return {
         ...state,
-        addpaste: { loading: false, message: action.message },
+        addpaste: { loading: false, message: action.message, success: "" },
       };
     case "FETCHPASTE_PENDING":
       return {

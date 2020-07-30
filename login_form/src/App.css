@@ -41,7 +41,12 @@ table {
   height: 80px;
   width: 230px;
 }
-
+@media (max-width: 320px) {
+  .logo1 {
+    height: 80px;
+    width: 180px;
+  }
+}
 .navbar {
   border-bottom: 1px solid gray;
   padding: 0 1.5rem;
@@ -52,4 +57,9 @@ table {
   color: white;
   font-size: 1.5rem;
   cursor: pointer;
+}
+
+td {
+  word-break: break-all;
+  word-wrap: break-word;
 }
