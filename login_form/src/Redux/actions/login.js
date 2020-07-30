@@ -1,7 +1,7 @@
 import axios from "axios";
 import { toast } from "react-toastify";
 
-export const LoginData = (identifier, password, history) => {
+export const loginData = (identifier, password, history) => {
   return (dispatch) => {
     dispatch({ type: "LOGINDATA_PENDING" });
     axios
@@ -36,7 +36,7 @@ export const LoginData = (identifier, password, history) => {
   };
 };
 
-export const AddPaste = (content, Expiration, Exposure, title) => {
+export const addPaste = (content, Expiration, Exposure, title) => {
   let jwt = localStorage.getItem("jwt");
 
   return (dispatch) => {
@@ -61,14 +61,9 @@ export const AddPaste = (content, Expiration, Exposure, title) => {
         dispatch({
           type: "ADDPASTE_SUCCESS",
         });
-
-        window.location.reload();
         toast.success("successfully Added", {
           position: toast.POSITION.TOP_CENTER,
-          autoClose: 10000,
         });
-
-        // toggle();
       })
 
       .catch((error) => {
@@ -82,7 +77,7 @@ export const AddPaste = (content, Expiration, Exposure, title) => {
   };
 };
 
-export const FetchPaste = () => {
+export const fetchPaste = () => {
   let jwt = localStorage.getItem("jwt");
 
   return (dispatch) => {
@@ -99,8 +94,6 @@ export const FetchPaste = () => {
           type: "FETCHPASTE_SUCCESS",
           paste: res.data,
         });
-
-        // console.log(`paste:${JSON.stringify(res.data)}`);
       })
       .catch((error) => {
         dispatch({

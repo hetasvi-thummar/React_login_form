@@ -20,9 +20,8 @@ import "react-toastify/dist/ReactToastify.css";
 import { useDispatch, useSelector } from "react-redux";
 import { yupResolver } from "@hookform/resolvers";
 import { useForm, Controller } from "react-hook-form";
-import { AddPaste, FetchPaste } from "../Redux/actions/login";
+import { addPaste, fetchPaste } from "../Redux/actions/login";
 import Header from "./Header";
-import { toast } from "react-toastify";
 
 const FormSchema = yup.object().shape({
   content: yup.string().required("*Text is Required"),
@@ -38,6 +37,8 @@ const Dashboard = () => {
 
   const dispatch = useDispatch();
 
+  const [refreshData, setRefreshData] = useState(false);
+
   const { paste } = useSelector((state) => ({
     loading: state.LoginReducer.fetchpaste.loading,
     paste: state.LoginReducer.fetchpaste.paste,
@@ -47,15 +48,17 @@ const Dashboard = () => {
     resolver: yupResolver(FormSchema),
   });
   const onSubmit = (data) => {
+    setRefreshData(false);
     dispatch(
-      AddPaste(data.content, data.Expiration, data.Exposure, data.title)
+      addPaste(data.content, data.Expiration, data.Exposure, data.title)
     );
     toggle();
+    setRefreshData(true);
   };
 
   useEffect(() => {
-    dispatch(FetchPaste());
-  }, [dispatch]);
+    dispatch(fetchPaste());
+  }, [dispatch, refreshData]);
 
   return (
     <div className="dashboard-div">
@@ -198,7 +201,7 @@ const Dashboard = () => {
               </Row>
             </ModalBody>
             <ModalFooter>
-              <Button color="secondary">Save</Button>
+              <Button color="primary">Save</Button>
             </ModalFooter>
           </Form>
         </Modal>

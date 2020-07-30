@@ -6,7 +6,7 @@ import { useForm, Controller } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers";
 import { useHistory, Redirect } from "react-router-dom";
-import { LoginData } from "../Redux/actions/login";
+import { loginData } from "../Redux/actions/login";
 import { useDispatch } from "react-redux";
 import logo from "./Images/formlogo.png";
 
@@ -23,7 +23,7 @@ const Loginform = () => {
   const history = useHistory();
 
   const onsubmit = (data) => {
-    dispatch(LoginData(data.identifier, data.password, history));
+    dispatch(loginData(data.identifier, data.password, history));
     reset({ identifier: "", password: "" });
   };
   const token = localStorage.getItem("jwt");
