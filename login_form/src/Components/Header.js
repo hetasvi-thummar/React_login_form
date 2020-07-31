@@ -7,8 +7,6 @@ import {
   Nav,
   NavbarText,
   Button,
-  NavItem,
-  NavLink,
 } from "reactstrap";
 import logo from "./Images/headerlogo.png";
 import { useHistory } from "react-router-dom";
@@ -33,22 +31,11 @@ const Header = () => {
     <div>
       <Navbar light expand="md">
         <NavbarBrand className="pr-2">
-          <img className="logo" src={logo} alt="logo" />
+          <img className="header-logo" src={logo} alt="logo" />
         </NavbarBrand>
         <NavbarToggler onClick={toggle} />
         <Collapse isOpen={isOpen} navbar>
-          <Nav className="mr-auto" navbar>
-            <NavItem>
-              <NavLink href="#" className="text-white">
-                HOME
-              </NavLink>
-            </NavItem>
-            <NavItem>
-              <NavLink href="#" className="text-white">
-                PASTES
-              </NavLink>
-            </NavItem>
-          </Nav>
+          <Nav className="mr-auto" navbar></Nav>
           <NavbarText className="pr-2 text-white">{user}</NavbarText>
           <NavbarText>
             <Button className="btn-sm">

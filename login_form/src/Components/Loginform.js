@@ -1,7 +1,5 @@
 import React from "react";
-import "bootstrap/dist/css/bootstrap.min.css";
 import { Container, Form, FormGroup, Input, Button } from "reactstrap";
-import "../App.css";
 import { useForm, Controller } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers";
@@ -10,14 +8,14 @@ import { loginData } from "../Redux/actions/login";
 import { useDispatch } from "react-redux";
 import logo from "./Images/formlogo.png";
 
-const FormSchema = yup.object().shape({
-  identifier: yup.string().required("*username is Required"),
+const formSchema = yup.object().shape({
+  identifier: yup.string().required("*Username is Required"),
   password: yup.string().required("*Password is Required"),
 });
 
 const Loginform = () => {
   const { control, register, handleSubmit, errors, reset } = useForm({
-    resolver: yupResolver(FormSchema),
+    resolver: yupResolver(formSchema),
   });
   const dispatch = useDispatch();
   const history = useHistory();
@@ -35,7 +33,7 @@ const Loginform = () => {
       <Container>
         <Form onSubmit={handleSubmit(onsubmit)} className="loginbox">
           <FormGroup className="text-center">
-            <img src={logo} alt="logo" className="logo1" />
+            <img src={logo} alt="logo" className="loginform-logo" />
           </FormGroup>
 
           <FormGroup>

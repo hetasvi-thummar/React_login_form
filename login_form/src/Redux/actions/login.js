@@ -19,8 +19,6 @@ export const loginData = (identifier, password, history) => {
 
         dispatch({
           type: "LOGINDATA_SUCCESS",
-          identifier: res.data.identifier,
-          password: res.data.password,
         });
 
         history.push("/dashboard");
@@ -36,8 +34,8 @@ export const loginData = (identifier, password, history) => {
   };
 };
 
-export const addPaste = (content, Expiration, Exposure, title) => {
-  let jwt = localStorage.getItem("jwt");
+export const addPaste = (content, Expiration, Exposure, title, toggle) => {
+  const jwt = localStorage.getItem("jwt");
 
   return (dispatch) => {
     dispatch({ type: "ADDPASTE_PENDING" });
@@ -67,11 +65,11 @@ export const addPaste = (content, Expiration, Exposure, title) => {
       })
 
       .catch((error) => {
-        toast.error("Failed", {
-          position: toast.POSITION.TOP_CENTER,
-        });
         dispatch({
           type: "ADDPASTE_FAILURE",
+        });
+        toast.error("Failed to Add", {
+          position: toast.POSITION.TOP_CENTER,
         });
       });
   };

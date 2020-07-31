@@ -29,17 +29,17 @@ table {
   background-color: white;
 }
 
-.logo {
+.header-logo {
   height: 3rem;
   width: 12rem;
 }
 
-.logo1 {
+.loginform-logo {
   height: 80px;
   width: 230px;
 }
 @media (max-width: 320px) {
-  .logo1 {
+  .loginform-logo {
     height: 80px;
     width: 180px;
   }

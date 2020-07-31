@@ -17,14 +17,11 @@ const LoginReducer = (state = initialState, action) => {
         ...state,
         loading: false,
         data: action.data,
-        error: "",
-        message: action.message,
       };
     case "LOGINDATA_FAILURE":
       return {
         ...state,
         loading: false,
-        success: "",
         message: action.message,
       };
     case "ADDPASTE_PENDING":
@@ -38,14 +35,12 @@ const LoginReducer = (state = initialState, action) => {
         addpaste: {
           loading: false,
           data: action.data,
-          error: "",
-          message: action.message,
         },
       };
     case "ADDPASTE_FAILURE":
       return {
         ...state,
-        addpaste: { loading: false, message: action.message, success: "" },
+        addpaste: { loading: false, message: action.message },
       };
     case "FETCHPASTE_PENDING":
       return {

@@ -16,14 +16,13 @@ import {
 } from "reactstrap";
 import * as yup from "yup";
 import moment from "moment";
-import "react-toastify/dist/ReactToastify.css";
 import { useDispatch, useSelector } from "react-redux";
 import { yupResolver } from "@hookform/resolvers";
 import { useForm, Controller } from "react-hook-form";
 import { addPaste, fetchPaste } from "../Redux/actions/login";
 import Header from "./Header";
 
-const FormSchema = yup.object().shape({
+const formSchema = yup.object().shape({
   content: yup.string().required("*Text is Required"),
   Expiration: yup.string().required("*Please select any value"),
   Exposure: yup.string().required("*Please select any value"),
@@ -40,12 +39,11 @@ const Dashboard = () => {
   const [refreshData, setRefreshData] = useState(false);
 
   const { paste } = useSelector((state) => ({
-    loading: state.LoginReducer.fetchpaste.loading,
     paste: state.LoginReducer.fetchpaste.paste,
   }));
 
   const { control, register, handleSubmit, errors } = useForm({
-    resolver: yupResolver(FormSchema),
+    resolver: yupResolver(formSchema),
   });
   const onSubmit = (data) => {
     setRefreshData(false);
@@ -53,6 +51,7 @@ const Dashboard = () => {
       addPaste(data.content, data.Expiration, data.Exposure, data.title)
     );
     toggle();
+
     setRefreshData(true);
   };
 
