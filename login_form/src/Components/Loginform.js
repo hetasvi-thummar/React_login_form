@@ -6,7 +6,7 @@ import { yupResolver } from "@hookform/resolvers";
 import { useHistory, Redirect } from "react-router-dom";
 import { loginData } from "../Redux/actions/login";
 import { useDispatch } from "react-redux";
-import logo from "./Images/formlogo.png";
+import logo from "../Images/formlogo.png";
 
 const formSchema = yup.object().shape({
   identifier: yup.string().required("*Username is Required"),
@@ -29,49 +29,47 @@ const Loginform = () => {
   return token ? (
     <Redirect to="/dashboard" />
   ) : (
-    <div className="maindiv">
-      <Container>
-        <Form onSubmit={handleSubmit(onsubmit)} className="loginbox">
-          <FormGroup className="text-center">
-            <img src={logo} alt="logo" className="loginform-logo" />
-          </FormGroup>
+    <Container className=" loginform-container" fluid={true}>
+      <Form onSubmit={handleSubmit(onsubmit)} className="loginbox border">
+        <FormGroup className="text-center">
+          <img src={logo} alt="logo" className="loginform-logo" />
+        </FormGroup>
 
-          <FormGroup>
-            <Controller
-              as={Input}
-              type="text"
-              name="identifier"
-              defaultValue=""
-              placeholder="username"
-              control={control}
-              ref={register}
-              className="text-center"
-            />
-            {errors && errors.identifier && (
-              <span className="text-danger">{errors.identifier.message}</span>
-            )}
-          </FormGroup>
-          <FormGroup>
-            <Controller
-              as={Input}
-              type="password"
-              name="password"
-              defaultValue=""
-              placeholder="password"
-              control={control}
-              ref={register}
-              className="text-center"
-            />
-            {errors && errors.password && (
-              <span className="text-danger">{errors.password.message}</span>
-            )}
-          </FormGroup>
-          <FormGroup className="text-center">
-            <Button color="primary">Sign In</Button>
-          </FormGroup>
-        </Form>
-      </Container>
-    </div>
+        <FormGroup>
+          <Controller
+            as={Input}
+            type="text"
+            name="identifier"
+            defaultValue=""
+            placeholder="username"
+            control={control}
+            ref={register}
+            className="text-center"
+          />
+          {errors && errors.identifier && (
+            <span className="text-danger">{errors.identifier.message}</span>
+          )}
+        </FormGroup>
+        <FormGroup>
+          <Controller
+            as={Input}
+            type="password"
+            name="password"
+            defaultValue=""
+            placeholder="password"
+            control={control}
+            ref={register}
+            className="text-center"
+          />
+          {errors && errors.password && (
+            <span className="text-danger">{errors.password.message}</span>
+          )}
+        </FormGroup>
+        <FormGroup className="text-center">
+          <Button color="primary">Sign In</Button>
+        </FormGroup>
+      </Form>
+    </Container>
   );
 };
 export default Loginform;

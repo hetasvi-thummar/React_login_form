@@ -1,5 +1,5 @@
-.maindiv {
-  background-color: darkblue;
+.loginform-container {
+  background-color: blue;
   padding: 2rem;
   min-height: 594px !important;
 }
@@ -10,18 +10,18 @@ form {
 }
 
 .loginbox {
-  margin-top: 5rem;
+  margin-top: 5rem !important;
   padding: 2rem;
   margin: 0 auto;
-  margin-top: 5rem;
   box-shadow: 10px 10px 10px #888888;
 }
+
 label {
   padding: 0.5rem;
   font-size: 15px;
 }
 
-.dashboard-div {
+.dashboard-container {
   background-color: white;
 }
 
@@ -41,12 +41,12 @@ table {
 @media (max-width: 320px) {
   .loginform-logo {
     height: 80px;
-    width: 180px;
+    width: 90%;
   }
 }
 .navbar {
   border-bottom: 1px solid gray;
-  padding: 0 1.5rem;
+  padding: 0 1.5rem !important;
   background-color: rgb(12, 60, 89);
 }
 
@@ -58,5 +58,6 @@ table {
 
 td {
   word-break: break-all;
-  word-wrap: break-word;
+  width: 33%;
+  padding: 0.5rem !important;
 }

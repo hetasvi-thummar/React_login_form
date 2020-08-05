@@ -1,24 +1,24 @@
 const initialState = {
   loading: false,
   data: null,
-  error: "",
+  error: false,
   message: null,
 };
 
-const loginReducer = (state = initialState, action) => {
+const addPasteReducer = (state = initialState, action) => {
   switch (action.type) {
-    case "LOGINDATA_PENDING":
+    case "ADDPASTE_PENDING":
       return { ...state, loading: true, data: null };
 
-    case "LOGINDATA_SUCCESS":
+    case "ADDPASTE_SUCCESS":
       return { ...state, loading: false, data: action.data };
 
-    case "LOGINDATA_FAILURE":
-      return { ...state, loading: false, message: action.message };
+    case "ADDPASTE_FAILURE":
+      return { ...state, loading: false, error: true };
 
     default:
       return { ...state };
   }
 };
 
-export default loginReducer;
+export default addPasteReducer;

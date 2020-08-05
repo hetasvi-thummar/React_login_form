@@ -8,7 +8,7 @@ import {
   NavbarText,
   Button,
 } from "reactstrap";
-import logo from "./Images/headerlogo.png";
+import logo from "../Images/headerlogo.png";
 import { useHistory } from "react-router-dom";
 import { FaSignOutAlt } from "react-icons/fa";
 
