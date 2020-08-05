@@ -39,7 +39,8 @@ const Dashboard = () => {
 
   const [refreshData, setRefreshData] = useState(false);
 
-  const { paste } = useSelector((state) => ({
+  const { loading, paste } = useSelector((state) => ({
+    loading: state.fetchPasteReducer.loading,
     paste: state.fetchPasteReducer.paste,
   }));
 
@@ -78,17 +79,23 @@ const Dashboard = () => {
             </tr>
           </thead>
           <tbody>
-            {paste !== null &&
-              paste
-                .slice()
-                .reverse()
-                .map((paste) => (
-                  <tr key={paste.id}>
-                    <td>{paste.title}</td>
-                    <td>{moment(paste.created_at).format("MMM Do, YY")}</td>
-                    <td>{paste.Expiration}</td>
-                  </tr>
-                ))}
+            {loading ? (
+              <div>Loading...</div>
+            ) : (
+              <>
+                {paste !== null &&
+                  paste
+                    .slice()
+                    .reverse()
+                    .map((paste) => (
+                      <tr key={paste.id}>
+                        <td>{paste.title}</td>
+                        <td>{moment(paste.created_at).format("MMM Do, YY")}</td>
+                        <td>{paste.Expiration}</td>
+                      </tr>
+                    ))}
+              </>
+            )}
           </tbody>
         </Table>
 

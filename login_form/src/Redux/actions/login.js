@@ -23,11 +23,11 @@ export const loginData = (identifier, password, history) => {
       })
 
       .catch((error) => {
-        toast.error("Invalid username or password", {
-          position: toast.POSITION.TOP_CENTER,
-        });
         dispatch({
           type: "LOGINDATA_FAILURE",
+        });
+        toast.error("Invalid username or password", {
+          position: toast.POSITION.TOP_CENTER,
         });
       });
   };

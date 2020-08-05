@@ -11,7 +11,7 @@ const addPasteReducer = (state = initialState, action) => {
       return { ...state, loading: true, data: null };
 
     case "ADDPASTE_SUCCESS":
-      return { ...state, loading: false, data: action.data };
+      return { ...state, loading: false };
 
     case "ADDPASTE_FAILURE":
       return { ...state, loading: false, error: true };

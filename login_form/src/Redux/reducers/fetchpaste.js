@@ -1,7 +1,7 @@
 const initialState = {
   loading: false,
   paste: null,
-  error: "",
+  error: false,
   message: null,
 };
 
@@ -14,7 +14,7 @@ const fetchPasteReducer = (state = initialState, action) => {
       return { ...state, loading: false, paste: action.paste };
 
     case "FETCHPASTE_FAILURE":
-      return { ...state, loading: false, message: action.message };
+      return { ...state, loading: false, message: action.message, error: true };
 
     default:
       return { ...state };
