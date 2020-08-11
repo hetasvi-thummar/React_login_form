@@ -24,10 +24,10 @@ import { fetchPaste } from "../Redux/actions/fetchpaste";
 import Header from "./Header";
 
 const formSchema = yup.object().shape({
-  content: yup.string().required("*Text is Required"),
+  content: yup.string().required("*Content is Required"),
   Expiration: yup.string().required("*Please select any value"),
   Exposure: yup.string().required("*Please select any value"),
-  title: yup.string().required("*Text is Required"),
+  title: yup.string().required("*Title is Required"),
 });
 
 const Dashboard = () => {
@@ -37,8 +37,6 @@ const Dashboard = () => {
 
   const dispatch = useDispatch();
 
-  const [refreshData, setRefreshData] = useState(false);
-
   const { loading, paste } = useSelector((state) => ({
     loading: state.fetchPasteReducer.loading,
     paste: state.fetchPasteReducer.paste,
@@ -47,19 +45,22 @@ const Dashboard = () => {
   const { control, register, handleSubmit, errors } = useForm({
     resolver: yupResolver(formSchema),
   });
-  const onSubmit = (data) => {
-    setRefreshData(false);
-    dispatch(
-      addPaste(data.content, data.Expiration, data.Exposure, data.title)
-    );
 
-    setRefreshData(true);
-    toggle();
+  const onSubmit = (data) => {
+    dispatch(
+      addPaste(
+        data.content,
+        data.Expiration,
+        data.Exposure,
+        data.title,
+        setModal
+      )
+    );
   };
 
   useEffect(() => {
     dispatch(fetchPaste());
-  }, [dispatch, refreshData]);
+  }, [dispatch]);
 
   return (
     <div className="dashboard-container">
@@ -70,7 +71,7 @@ const Dashboard = () => {
             Add Paste
           </Button>
         </Row>
-        <Table>
+        <Table className="dashboard-table">
           <thead className="bg-light">
             <tr>
               <th>Name</th>
@@ -85,8 +86,11 @@ const Dashboard = () => {
               <>
                 {paste !== null &&
                   paste
-                    .slice()
-                    .reverse()
+                    .slice(0)
+                    .sort(
+                      (item, index) =>
+                        new Date(index.created_at) - new Date(item.created_at)
+                    )
                     .map((paste) => (
                       <tr key={paste.id}>
                         <td>{paste.title}</td>

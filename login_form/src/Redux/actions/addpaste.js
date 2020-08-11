@@ -1,7 +1,8 @@
 import axios from "axios";
 import { toast } from "react-toastify";
+import { fetchPaste } from "./fetchpaste";
 
-export const addPaste = (content, Expiration, Exposure, title, toggle) => {
+export const addPaste = (content, Expiration, Exposure, title, setModal) => {
   const jwt = localStorage.getItem("jwt");
 
   return (dispatch) => {
@@ -26,18 +27,22 @@ export const addPaste = (content, Expiration, Exposure, title, toggle) => {
         dispatch({
           type: "ADDPASTE_SUCCESS",
         });
+        dispatch(fetchPaste());
         toast.success("successfully Added", {
           position: toast.POSITION.TOP_CENTER,
         });
+        setModal(false);
       })
 
       .catch((error) => {
         dispatch({
           type: "ADDPASTE_FAILURE",
+          message: error.message,
         });
-        toast.error("Failed to Add", {
+        toast.error(error.message, {
           position: toast.POSITION.TOP_CENTER,
         });
+        setModal(true);
       });
   };
 };

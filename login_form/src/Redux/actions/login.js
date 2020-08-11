@@ -11,22 +11,26 @@ export const loginData = (identifier, password, history) => {
       })
 
       .then((res) => {
-        toast.success("successfully login", {
-          position: toast.POSITION.TOP_CENTER,
-        });
         localStorage.setItem("jwt", res.data.jwt);
         localStorage.setItem("username", res.data.user.username);
+
         dispatch({
           type: "LOGINDATA_SUCCESS",
         });
+
+        toast.success("successfully login", {
+          position: toast.POSITION.TOP_CENTER,
+        });
+
         history.push("/dashboard");
       })
 
       .catch((error) => {
         dispatch({
           type: "LOGINDATA_FAILURE",
+          message: error.message,
         });
-        toast.error("Invalid username or password", {
+        toast.error(error.message, {
           position: toast.POSITION.TOP_CENTER,
         });
       });
