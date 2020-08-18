@@ -28,9 +28,8 @@ export const loginData = (identifier, password, history) => {
       .catch((error) => {
         dispatch({
           type: "LOGINDATA_FAILURE",
-          message: error.message,
         });
-        toast.error(error.message, {
+        toast.error("Invalid username or password", {
           position: toast.POSITION.TOP_CENTER,
         });
       });

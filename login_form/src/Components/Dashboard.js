@@ -21,6 +21,8 @@ import { yupResolver } from "@hookform/resolvers";
 import { useForm, Controller } from "react-hook-form";
 import { addPaste } from "../Redux/actions/addpaste";
 import { fetchPaste } from "../Redux/actions/fetchpaste";
+import { deletePaste } from "../Redux/actions/deletepaste";
+import { FaTrash } from "react-icons/fa";
 import Header from "./Header";
 
 const formSchema = yup.object().shape({
@@ -58,6 +60,10 @@ const Dashboard = () => {
     );
   };
 
+  const removehandle = (id) => {
+    dispatch(deletePaste(id));
+  };
+
   useEffect(() => {
     dispatch(fetchPaste());
   }, [dispatch]);
@@ -74,9 +80,12 @@ const Dashboard = () => {
         <Table className="dashboard-table">
           <thead className="bg-light">
             <tr>
+              <th>Content</th>
               <th>Name</th>
               <th>Added</th>
+              <th>Exposure</th>
               <th>Expiry Time</th>
+              <th>Options</th>
             </tr>
           </thead>
           <tbody>
@@ -93,9 +102,14 @@ const Dashboard = () => {
                     )
                     .map((paste) => (
                       <tr key={paste.id}>
+                        <td>{paste.content}</td>
                         <td>{paste.title}</td>
                         <td>{moment(paste.created_at).format("MMM Do, YY")}</td>
+                        <td>{paste.Exposure}</td>
                         <td>{paste.Expiration}</td>
+                        <td>
+                          <FaTrash onClick={() => removehandle(paste.id)} />
+                        </td>
                       </tr>
                     ))}
               </>
