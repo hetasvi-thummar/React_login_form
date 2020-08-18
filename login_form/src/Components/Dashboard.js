@@ -21,8 +21,12 @@ import { yupResolver } from "@hookform/resolvers";
 import { useForm, Controller } from "react-hook-form";
 import { addPaste } from "../Redux/actions/addpaste";
 import { fetchPaste } from "../Redux/actions/fetchpaste";
+<<<<<<< HEAD
 import { deletePaste } from "../Redux/actions/deletepaste";
 import { FaTrash } from "react-icons/fa";
+=======
+
+>>>>>>> 8f4d774e459dbc0540f06a61e64c61de5435ef4f
 import Header from "./Header";
 
 const formSchema = yup.object().shape({
