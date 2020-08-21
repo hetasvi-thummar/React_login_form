@@ -21,10 +21,11 @@ import { yupResolver } from "@hookform/resolvers";
 import { useForm, Controller } from "react-hook-form";
 import { addPaste } from "../Redux/actions/addpaste";
 import { fetchPaste } from "../Redux/actions/fetchpaste";
+import { fetchSinglePaste } from "../Redux/actions/fetchpaste";
 import { deletePaste } from "../Redux/actions/deletepaste";
-import { FaTrash } from "react-icons/fa";
-
+import { FaTrashAlt, FaPencilAlt } from "react-icons/fa";
 import Header from "./Header";
+import { editPaste } from "../Redux/actions/editpaste";
 
 const formSchema = yup.object().shape({
   content: yup.string().required("*Content is Required"),
@@ -34,20 +35,28 @@ const formSchema = yup.object().shape({
 });
 
 const Dashboard = () => {
+  const [newModal, setNewModal] = useState(false);
   const [modal, setModal] = useState(false);
 
   const toggle = () => setModal(!modal);
 
+  const popup = () => setNewModal(!newModal);
+
   const dispatch = useDispatch();
 
-  const { loading, paste } = useSelector((state) => ({
+  const { loading, paste, onepaste } = useSelector((state) => ({
     loading: state.fetchPasteReducer.loading,
     paste: state.fetchPasteReducer.paste,
+    onepaste: state.fetchPasteReducer.singlePaste.onepaste,
   }));
 
   const { control, register, handleSubmit, errors } = useForm({
     resolver: yupResolver(formSchema),
   });
+
+  useEffect(() => {
+    dispatch(fetchPaste());
+  }, [dispatch]);
 
   const onSubmit = (data) => {
     dispatch(
@@ -65,9 +74,18 @@ const Dashboard = () => {
     dispatch(deletePaste(id));
   };
 
-  useEffect(() => {
-    dispatch(fetchPaste());
-  }, [dispatch]);
+  const edithandle = (data) => {
+    dispatch(
+      editPaste(
+        data.content,
+        data.Expiration,
+        data.Exposure,
+        data.title,
+        onepaste.id,
+        setNewModal
+      )
+    );
+  };
 
   return (
     <div className="dashboard-container">
@@ -109,7 +127,14 @@ const Dashboard = () => {
                         <td>{paste.Exposure}</td>
                         <td>{paste.Expiration}</td>
                         <td>
-                          <FaTrash onClick={() => removehandle(paste.id)} />
+                          <FaPencilAlt
+                            onClick={() => {
+                              popup();
+                              dispatch(fetchSinglePaste(paste.id));
+                            }}
+                            className="icon"
+                          />
+                          <FaTrashAlt onClick={() => removehandle(paste.id)} />
                         </td>
                       </tr>
                     ))}
@@ -228,6 +253,126 @@ const Dashboard = () => {
               <Button color="primary">Save</Button>
             </ModalFooter>
           </Form>
+        </Modal>
+
+        <Modal isOpen={newModal} toggle={popup}>
+          {onepaste !== null && (
+            <>
+              <Form onSubmit={handleSubmit(edithandle)}>
+                <ModalHeader toggle={popup}>Edit Paste</ModalHeader>
+
+                <ModalBody>
+                  <Row>
+                    <Col md={12}>
+                      <Label> Paste</Label>
+                    </Col>
+                  </Row>
+
+                  <Row>
+                    <Col md={12}>
+                      <FormGroup>
+                        <Controller
+                          as={Input}
+                          type="textarea"
+                          name="content"
+                          defaultValue={onepaste.content}
+                          control={control}
+                          ref={register}
+                        />
+                        {errors && errors.content && (
+                          <span className="text-danger">
+                            {errors.content.message}
+                          </span>
+                        )}
+                      </FormGroup>
+                    </Col>
+                  </Row>
+
+                  <Row>
+                    <Col md={4}>
+                      <Label>Paste Expiration</Label>
+                    </Col>
+                    <Col md={8}>
+                      <FormGroup>
+                        <Controller
+                          as={Input}
+                          type="select"
+                          name="Expiration"
+                          defaultValue={onepaste.Expiration}
+                          control={control}
+                          ref={register}
+                        >
+                          <option value="">Select</option>
+                          <option value="aminute">aminute</option>
+                          <option value="ahours">ahours</option>
+                        </Controller>
+                        {errors && errors.Expiration && (
+                          <span className="text-danger">
+                            {errors.Expiration.message}
+                          </span>
+                        )}
+                      </FormGroup>
+                    </Col>
+                  </Row>
+
+                  <Row>
+                    <Col md={4}>
+                      <Label>Paste Exposure</Label>
+                    </Col>
+                    <Col md={8}>
+                      <FormGroup>
+                        <Controller
+                          as={Input}
+                          type="select"
+                          name="Exposure"
+                          defaultValue={onepaste.Exposure}
+                          control={control}
+                          ref={register}
+                        >
+                          <option value="">Select</option>
+                          <option value="public">public</option>
+                          <option value="private">private</option>
+                          <option value="unlisted">unlisted</option>
+                        </Controller>
+                        {errors && errors.Exposure && (
+                          <span className="text-danger">
+                            {errors.Exposure.message}
+                          </span>
+                        )}
+                      </FormGroup>
+                    </Col>
+                  </Row>
+
+                  <Row>
+                    <Col md={4}>
+                      <Label> Paste Name/Title</Label>
+                    </Col>
+                    <Col md={8}>
+                      <FormGroup>
+                        <Controller
+                          as={Input}
+                          type="text"
+                          name="title"
+                          placeholder="Enter Paste Title"
+                          defaultValue={onepaste.title}
+                          control={control}
+                          ref={register}
+                        />
+                        {errors && errors.title && (
+                          <span className="text-danger">
+                            {errors.title.message}
+                          </span>
+                        )}
+                      </FormGroup>
+                    </Col>
+                  </Row>
+                </ModalBody>
+                <ModalFooter>
+                  <Button color="primary">Save</Button>
+                </ModalFooter>
+              </Form>
+            </>
+          )}
         </Modal>
       </Container>
     </div>

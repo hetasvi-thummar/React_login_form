@@ -10,7 +10,7 @@ import {
 } from "reactstrap";
 import logo from "../Images/headerlogo.png";
 import { useHistory } from "react-router-dom";
-import { FaSignOutAlt } from "react-icons/fa";
+import { FaSignOutAlt, FaUser } from "react-icons/fa";
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -36,7 +36,11 @@ const Header = () => {
         <NavbarToggler onClick={toggle} />
         <Collapse isOpen={isOpen} navbar>
           <Nav className="mr-auto" navbar></Nav>
+          <NavbarText>
+            <FaUser className="usericon" />
+          </NavbarText>
           <NavbarText className="pr-2 text-white">{user}</NavbarText>
+
           <NavbarText>
             <Button className="btn-sm">
               <FaSignOutAlt onClick={logout} className="signout" />

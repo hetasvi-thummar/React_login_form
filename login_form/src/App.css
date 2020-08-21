@@ -59,36 +59,56 @@ table {
 }
 .dashboard-table {
   width: 100% !important;
+  table-layout: fixed;
 }
 
+.icon {
+  margin-right: 1rem;
+}
+
+.usericon {
+  color: gray;
+  margin-right: 0.5rem;
+}
 td {
   word-break: break-all;
   width: 20%;
 }
-
+th {
+  padding: 0.5rem !important;
+}
 @media only screen and (min-width: 320px) and (max-width: 374px) {
   .dashboard-table {
     font-size: 0.65rem;
   }
   td {
-    padding: 0.3rem !important;
+    padding: 0.13rem !important;
+  }
+  .icon {
+    margin-right: 0.4rem;
   }
 }
 
 @media only screen and (min-width: 375px) and (max-width: 424px) {
   .dashboard-table {
-    font-size: 0.8rem;
+    font-size: 0.7rem;
   }
   td {
-    padding: 0.4rem !important;
+    padding: 0.3rem !important;
+  }
+  .icon {
+    margin-right: 0.5rem;
   }
 }
 
 @media only screen and (min-width: 425px) and (max-width: 767px) {
   .dashboard-table {
-    font-size: 0.9rem;
+    font-size: 0.8rem;
   }
   td {
-    padding: 0.5rem !important;
+    padding: 0.35rem !important;
+  }
+  .icon {
+    margin-right: 0.6rem;
   }
 }

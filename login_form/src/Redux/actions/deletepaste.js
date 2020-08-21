@@ -1,18 +1,23 @@
 import axios from "axios";
 import { toast } from "react-toastify";
+import { fetchPaste } from "./fetchpaste";
 
 export const deletePaste = (id) => {
-  console.log(id);
+  const jwt = localStorage.getItem("jwt");
   return (dispatch) => {
     dispatch({ type: "DELETE_PASTE_PENDING" });
     axios
-      .delete(`https://pastebindemo.herokuapp.com/pastes/${id}`)
+      .delete(`https://pastebindemo.herokuapp.com/pastes/${id}`, {
+        headers: {
+          Authorization: `Bearer ${jwt}`,
+        },
+      })
 
       .then((res) => {
         dispatch({
           type: "DELETE_PASTE_SUCCESS",
-          paste: res.data,
         });
+        dispatch(fetchPaste());
         toast.success("successfully deleted", {
           position: toast.POSITION.TOP_CENTER,
         });
