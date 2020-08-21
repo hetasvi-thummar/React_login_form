@@ -114,7 +114,6 @@ const Dashboard = () => {
               <>
                 {paste !== null &&
                   paste
-                    .slice(0)
                     .sort(
                       (item, index) =>
                         new Date(index.created_at) - new Date(item.created_at)
@@ -134,7 +133,17 @@ const Dashboard = () => {
                             }}
                             className="icon"
                           />
-                          <FaTrashAlt onClick={() => removehandle(paste.id)} />
+                          <FaTrashAlt
+                            onClick={() => {
+                              if (
+                                window.confirm(
+                                  "Are you sure to delete this record?"
+                                )
+                              ) {
+                                removehandle(paste.id);
+                              }
+                            }}
+                          />
                         </td>
                       </tr>
                     ))}

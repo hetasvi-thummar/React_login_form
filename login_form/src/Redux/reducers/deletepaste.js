@@ -11,10 +11,10 @@ const deletePasteReducer = (state = initialState, action) => {
       return { ...state, loading: true, paste: null };
 
     case "DELETE_PASTE_SUCCESS":
-      return { ...state, loading: false, paste: action.paste };
+      return { ...state, loading: false };
 
     case "DELETE_PASTE_FAILURE":
-      return { ...state, loading: false, error: true };
+      return { ...state, loading: false, error: true, paste: null };
 
     default:
       return { ...state };

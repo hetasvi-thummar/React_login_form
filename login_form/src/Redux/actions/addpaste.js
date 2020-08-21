@@ -42,7 +42,6 @@ export const addPaste = (content, Expiration, Exposure, title, setModal) => {
         toast.error(error.message, {
           position: toast.POSITION.TOP_CENTER,
         });
-        setModal(true);
       });
   };
 };

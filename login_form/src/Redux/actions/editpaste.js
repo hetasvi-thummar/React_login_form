@@ -18,10 +18,10 @@ export const editPaste = (
       .put(
         `https://pastebindemo.herokuapp.com/pastes/${id}`,
         {
-          content: content,
-          Expiration: Expiration,
-          Exposure: Exposure,
-          title: title,
+          content,
+          Expiration,
+          Exposure,
+          title,
         },
         {
           headers: {

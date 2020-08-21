@@ -15,14 +15,23 @@ const fetchPasteReducer = (state = initialState, action) => {
       return { ...state, loading: false, paste: action.paste };
 
     case "FETCHPASTE_FAILURE":
-      return { ...state, loading: false, message: action.message, error: true };
+      return {
+        ...state,
+        loading: false,
+        message: action.message,
+        error: true,
+        paste: null,
+      };
+
     case "FETCH_SINGLEPASTE_PENDING":
       return { ...state, singlePaste: { loading: true, onepaste: null } };
+
     case "FETCH_SINGLEPASTE_SUCCESS":
       return {
         ...state,
         singlePaste: { loading: false, onepaste: action.onepaste },
       };
+
     case "FETCH_SINGLEPASTE_FAILURE":
       return {
         ...state,
