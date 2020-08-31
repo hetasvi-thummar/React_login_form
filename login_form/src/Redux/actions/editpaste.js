@@ -8,7 +8,7 @@ export const editPaste = (
   Exposure,
   title,
   id,
-  setNewModal
+  setModal
 ) => {
   const jwt = localStorage.getItem("jwt");
 
@@ -35,7 +35,7 @@ export const editPaste = (
           type: "EDIT_PASTE_SUCCESS",
           data: res.data,
         });
-        setNewModal(false);
+        setModal(false);
         dispatch(fetchPaste());
         toast.success("successfully Updated!!", {
           position: toast.POSITION.TOP_CENTER,
@@ -50,7 +50,7 @@ export const editPaste = (
         toast.error(error.message, {
           position: toast.POSITION.TOP_CENTER,
         });
-        setNewModal(true);
+        setModal(true);
       });
   };
 };
