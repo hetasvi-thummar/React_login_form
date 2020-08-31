@@ -104,7 +104,14 @@ const Dashboard = () => {
             )}
           </tbody>
         </Table>
-        {modal && <Mymodal open={modal} action={action} />}
+        {modal && (
+          <Mymodal
+            modal={modal}
+            action={action}
+            setModal={setModal}
+            toggle={toggle}
+          />
+        )}
       </Container>
     </div>
   );

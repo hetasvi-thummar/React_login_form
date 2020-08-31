@@ -26,14 +26,10 @@ const formSchema = yup.object().shape({
   title: yup.string().required("*Title is Required"),
 });
 
-const Mymodal = ({ open, action }) => {
+const Mymodal = ({ modal, setModal, action, toggle }) => {
   const { control, register, handleSubmit, errors } = useForm({
     resolver: yupResolver(formSchema),
   });
-
-  const [modal, setModal] = useState(open);
-
-  const toggle = () => setModal(!modal);
 
   const dispatch = useDispatch();
 
